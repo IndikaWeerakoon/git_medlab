@@ -23,7 +23,7 @@ export class AuthService {
       return this.http.post<ValidateUser>(this.url,userInfo,httpOptions);
   }
 
-  public isAuthenticated(input:boolean):boolean{
+  public isAuthenticated():boolean{
     this.user = localStorage.getItem('user');
     if(!this.user){
       return false;
