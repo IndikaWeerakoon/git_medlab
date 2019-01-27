@@ -34,10 +34,10 @@ private errorHandler(error:HttpErrorResponse){
 }
 
   public isAuthenticated():boolean{
-    let id = localStorage.getItem('user')
-    console.log(id);
-    if(id == null){
-      console.log("not work");
+
+    this.user = localStorage.getItem('user');
+    if(!this.user){
+
       return false;
     }else {
       this.user = JSON.parse(localStorage.getItem('user'));
