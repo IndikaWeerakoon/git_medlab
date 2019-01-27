@@ -1,0 +1,31 @@
+.main-content{
+    margin-top:5%
+}
+.card{
+    .card-title{
+        font-weight: normal;
+    }
+}
+.mat-icon{
+    // color: red;
+    cursor: pointer;
+}
+// ::ng-deep {//form field color change
+//     .mat-form-field-appearance-outline .mat-form-field-outline {
+//        color: gray;
+//     }
+//     mat-form-field {
+//        .mat-hint, input, ::placeholder, .mat-form-field-label {
+//           color: red;
+//        }
+//     }
+//  }
+
+.mat-stroked-button{
+    width: 100%;
+    font-size: 18px;
+}
+.passwordForget{
+   font-size: 13px;
+    font-style: italic;
+}
