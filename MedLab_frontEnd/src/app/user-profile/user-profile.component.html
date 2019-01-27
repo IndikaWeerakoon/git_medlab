@@ -2,10 +2,16 @@
         <div fxLayout="row" fxLayoutWrap="wrap" >
                 <!-- Card column -->
                 <div fxFlex.gt-sm="100%" fxFlex="100">
+                   
                     <mat-card>
+                            <div *ngIf = 'finalSubmitError' class="alert alert-danger " role="alert">
+                                    <strong>Submit ERROR:</strong> Form is not submitted.
+                                    <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                     </button> -->
+                            </div>
                         <mat-card-content>
-                            <mat-card-title>Stepper</mat-card-title>
-                            <mat-card-subtitle>Check the <code class=""><a href="https://material.angular.io/components/stepper/overview">Official Component</a></code></mat-card-subtitle>
+                            <mat-card-title>Add Customer Report</mat-card-title>
                             
                             <mat-horizontal-stepper >
                                 <!-- +===========================================================
@@ -26,15 +32,15 @@
                                                       <mat-checkbox (change)="makeJSON($event,i,testset)" (click) = "$event.stopPropagation();" 
                                                                     class="check_box_Style"><span class ="txtdecoCheckbox">{{testset.testProfileName}}</span></mat-checkbox>
                                                     </mat-panel-title>
-                                                    <!-- <mat-panel-description>
-                                                      Type your name and age
-                                                    </mat-panel-description> -->
+                                                    
                                                   </mat-expansion-panel-header>
                                               
                                                   <!-- Inside the panel expand-->
-                                                  <ul>
-                                                        <li *ngFor = "let test of testset.testSet">{{test.name}}</li>
-                                                  </ul>
+                                                  <mat-list>
+                                                        <mat-list-item *ngFor = "let test of testset.testSet">{{test.name}}</mat-list-item>
+                                                  </mat-list>
+                                                        
+                                                  
                                                 </mat-expansion-panel>
                                                 
                                                 <mat-expansion-panel *ngIf="testset.testProfileName == 'Custom'">
@@ -42,27 +48,32 @@
                                                         <mat-panel-title  >
                                                                 Custom Test
                                                         </mat-panel-title>
-                                                        <!-- <mat-panel-description>
-                                                        Type your name and age
-                                                        </mat-panel-description> -->
+                                                        <mat-panel-description>
+                                                            You can add several tests.
+                                                        </mat-panel-description>
                                                     </mat-expansion-panel-header>
                                                 
                                                     <!-- Inside the panel expand-->
-                                                    <ul>
-                                                            <li *ngFor = "let test of testSet[0].testSet"><mat-checkbox  (change)='makeJSON($event,i,testset,test)'>{{test.name}}</mat-checkbox></li>
-                                                    </ul>
+                                                    <mat-list>
+                                                            <mat-list-item *ngFor = "let test of testSet[0].testSet"><mat-checkbox 
+                                                                 (change)='makeJSON($event,i,testset,test)'>{{test.name}}</mat-checkbox></mat-list-item>
+                                                    </mat-list>
                                                 </mat-expansion-panel>
-
+                                                                
                                     </mat-accordion>
+                                        <button mat-raised-button type="button" class="btn btn-danger pull-right" matStepperNext>Next</button>
+                                        <button mat-raised-button type="button" class="btn btn-danger pull-right" matStepperPrevious>Back</button>
+                                        
                                     </div>
+                                      
                                 </div>
-                               
+                                       
                                 
                               </mat-step>
                               <!-- +==============================================================================
                                     This is SECOND STEPPER .that is user to display Costommer details insert form
                                    +============================================================================== -->
-                              <mat-step >
+                              <mat-step [stepControl]="customerDetailForm">
                                   <div class="main-content">
                                         <!-- <div class="container-fluid"> -->
                                             <!-- <div class="row">
@@ -73,51 +84,65 @@
                                                         </div>
                                                         <div class="card-body">
                                                                 <ng-template matStepLabel>Add Costommer</ng-template>
-                                                            <form>
+                                                            <form [formGroup]= "customerDetailForm">
+                                                                <input type="hidden" formControlName = "customerId" [(ngModel)]='existingCustomerData.customerId'><!--This field is used to store existing customer id-->
                                                                 <div class="row">
-                                                                    <div class="col-md-8"></div>
-                                                                    <div class="col-md-4 " style = "margin-left:0px;">
-                                                                        <mat-form-field class="example-full-width">
-                                                                          <input matInput placeholder="Telephone Number" type="text">
+                                                                    <div class="col-md-8 "></div>
+                                                                    <div class="col-md-3 " style = "margin-left:0px;">
+                                                        
+                                                                        <mat-form-field class="example-full-width" >
+                                                                          <input matInput placeholder="Telephone Number" type="text" (keyup.enter)='onTpSubmit()' formControlName='tpNo'>
+                                                                          
                                                                         </mat-form-field>
                                                                     </div>
+                                                                    <div class="col-md-1">
+                                                                       <button mat-icon-button (click)="onTpSubmit()" type="button"  class="btn btn-danger pull-left" ><mat-icon>search</mat-icon></button> 
+                                                                    </div>
+                                                                    
                                                                 </div>
                                                                 <div class="row">
                                                                     <div class="col-md-12">
                                                                       <mat-form-field class="example-full-width">
-                                                                        <input matInput placeholder="Name" type="text">
+                                                                        <input matInput placeholder="Name" type="text" [(ngModel)]='existingCustomerData.name' formControlName='name'>
                                                                       </mat-form-field>
                                                                     </div>
                                                                   </div>
                                       
                                                                 <div class="row">
-                                                                    <div class="col-md-12">
+                                                                    <div class="col-md-8">
                                                                       <mat-form-field class="example-full-width">
-                                                                        <input matInput placeholder="Email" type="email">
+                                                                        <input matInput placeholder="Email" type="email" [(ngModel)]='existingCustomerData.email' formControlName='email'>
                                                                       </mat-form-field>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <mat-form-field class="example-full-width">
+                                                                            <mat-select placeholder="Location" formControlName = 'location'>
+                                                                                <mat-option *ngFor="let location of locations"  [value]="location.locationId"> {{location.location}} </mat-option> 
+                                                                            </mat-select>
+                                                                        </mat-form-field>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
                                                                     <div class="col-md-4">
                                                                           <mat-form-field class="example-full-width">
-                                                                                  <input matInput [matDatepicker]="picker" placeholder="Date of Birth">
+                                                                                  <input matInput [matDatepicker]="picker" placeholder="Date of Birth" [(ngModel)]='existingCustomerData.dob' formControlName='dateOfBirth'>
                                                                                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                                                                   <mat-datepicker touchUi #picker></mat-datepicker>
-                                                                                </mat-form-field>
+                                                                          </mat-form-field>
                                                                     </div>
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-md-6">
                                                                         <label style = "margin-top: 20px; margin-left: 30px"> Gender:
-                                                                            <mat-radio-group style = "margin-left: 30px">
-                                                                                    <mat-radio-button value="male">Male</mat-radio-button>
-                                                                                    <mat-radio-button value="female" style = "margin-left: 50px">Female</mat-radio-button>
+                                                                            <mat-radio-group style = "margin-left: 30px" [(ngModel)]='existingCustomerData.gender' formControlName='gender'>
+                                                                                    <mat-radio-button value="male" >Male</mat-radio-button>
+                                                                                    <mat-radio-button value="female" style = "margin-left: 50px" >Female</mat-radio-button>
                                                                             </mat-radio-group>
                                                                         </label>
                                                                     </div>
                                       
                                                                 </div>
                                       
-                                                                <button mat-raised-button type="button" class="btn btn-danger pull-right">Next</button>
-                                                                <button mat-raised-button type="button" class="btn btn-danger pull-right">Back</button>
+                                                                <button mat-raised-button type="button" class="btn btn-danger pull-right" [disabled]='!customerDetailForm.valid' (click)='onSubmit()' matStepperNext>Next</button>
+                                                                <button mat-raised-button type="button" class="btn btn-danger pull-right" matStepperPrevious>Back</button>
                                                                 <div class="clearfix"></div>
                                                             </form>
                                                         </div>
@@ -129,19 +154,107 @@
                                 
                                     
                               </mat-step>
+                              <!-- +==============================================================================
+                                    This is THIRD STEPPER .This is used to Display billing details....
+                                   +============================================================================== -->
+                              
                               <mat-step>
-                                    <ng-template matStepLabel>Done</ng-template>
-                                       You are now done.
-                                    <div>
-                                      <button mat-raised-button color="accent" matStepperNext>Next</button>
-                                      <button mat-raised-button color="accent" matStepperPrevious>Back</button>
+                                    <ng-template matStepLabel>Billing Information</ng-template>
+                                       <h4 *ngIf='receipt' style="font-weight: bold">Reciept ID: {{receipt.receiptId}}</h4>
+                                       <div class="table-responsive">
+                                        <table class="table">
+                                            <thead class=" text-primary">
+                                                <th>
+                                                    Profile ID
+                                                </th>
+                                                <th>
+                                                    Prfile Name/Test
+                                                </th>
+                                                
+                                                <th>
+                                                    Costs
+                                                </th>
+                                            </thead>
+                                            <tbody>
+                                                <tr  *ngFor='let testProf of testProfiles' >
+                                                    
+                                                    <td *ngIf='isCustomTest(testProf.profileName)'>
+                                                            {{ testProf.profileId}}
+                                                    </td>
+                                                    <td *ngIf='isCustomTest(testProf.profileName)'>
+                                                            {{testProf.profileName}}
+                                                    </td>
+                                                        
+                                                    <td class="text-primary" *ngIf='isCustomTest(testProf.profileName)'>
+                                                        {{testProfilePrice(testProf.profileId)|number:'.2-2'}}
+                                                    </td>
+                                                    
+                                                    <td *ngIf='!isCustomTest(testProf.profileName)'>
+                                                            {{ testProf.profileId}}
+                                                    </td>
+                                                    <td *ngIf='!isCustomTest(testProf.profileName)'>
+                                                            {{testProf.profileName}}
+                                                    </td>
+                                                        
+                                                    <td class="text-primary" *ngIf='!isCustomTest(testProf.profileName)'>
+                                                        {{customTestPrice()|number:'.2-2'}}
+                                                    </td>  
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        
+                                                    </td>
+                                                    <td  style="text-align:right;font-weight:900;">
+                                                        Total
+                                                    </td>
+                                                    
+                                                    <td class="text-primary">
+                                                        Rs.{{SubTotal|number:'.2-2'}}
+                                                    </td>
+                                                </tr>
+              
+                                            </tbody>
+                                        </table>
                                     </div>
-                                  </mat-step>
+                                    <div>
+                                        <button mat-raised-button type="button" class="btn btn-danger pull-right"  matStepperNext>Next</button>
+                                        <button mat-raised-button type="button" class="btn btn-danger pull-right" matStepperPrevious>Back</button>
+                                    </div>
+                              </mat-step>
+                              <!-- +==============================================================================
+                                    This is FOURTH STEPPER .This is used to store container details ....
+                                   +============================================================================== -->
+                              
                               <mat-step>
-                                <ng-template matStepLabel>Done</ng-template>
-                                You are now done.
+                                <ng-template matStepLabel>Add Containers</ng-template>
+                                <form [formGroup]='specimenIds'>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title">Speciman Container Details</h4>
+                                            <!-- <p class="card-text">This is for inserting Speciman ID</p> --><!--can add description about speciman types-->
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <mat-form-field class="example-full-width" appearance="outline" >
+                                                        <mat-label>Specimen ID</mat-label>
+                                                        <input matInput placeholder="Specimen ID" type="text" formControlName='specimenId'>
+                                                    </mat-form-field>
+                                                </div>
+                                                <!-- <div class="col-md-6">
+                                                    <mat-form-field class="example-full-width" appearance="outline" >
+                                                        <mat-label>Blood Sample ID</mat-label>
+                                                        <input matInput placeholder="Blood Sample ID" type="text" formControlName='blood'>
+                                                    </mat-form-field>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </form>
                                 <div>
-                                  <button mat-raised-button color="accent" matStepperPrevious>Back</button>
+                                    <button mat-raised-button type="button" (click) = 'sendBigData()' class="btn btn-danger pull-right" matStepperNext>Save</button>
+                                    <button mat-raised-button type="button" class="btn btn-danger pull-right" matStepperPrevious>Back</button>
                                 </div>
                               </mat-step>
                             </mat-horizontal-stepper>

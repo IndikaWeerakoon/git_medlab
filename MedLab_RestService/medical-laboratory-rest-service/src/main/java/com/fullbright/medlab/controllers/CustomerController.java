@@ -41,7 +41,10 @@ public class CustomerController {
 	@Path("/{telephone}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getUser(@PathParam("telephone") String telephone) {		
-		Customer customer = customerRepository.findCustomerByTelephone(telephone);		
+		Customer customer = customerRepository.findCustomerByTelephone(telephone);
+		if(customer == null){
+			return Response.status(Response.Status.NOT_FOUND).build();
+		}
 		return Response.status(Response.Status.OK).entity(customer).build();
 	}	
 	

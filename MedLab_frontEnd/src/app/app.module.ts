@@ -25,6 +25,12 @@ import { MaterialModuleModule } from './material-module.module';
 import { AuthGardService } from './service/auth.gard.service';
 import { AuthService } from './service/auth-servise.service';
 import { HttpClientModule } from '@angular/common/http';
+import { CustomerService } from './service/customer.service';
+import { TestService } from './service/test.service';
+import { LabTesterComponent } from './lab-tester/lab-tester.component';
+import { MatProgressBarModule, MatDividerModule } from '@angular/material';
+import { SpinnerComponent } from './app-spiner';
+import { ReportSubmitService } from './service/report-submit.service';
 
 @NgModule({
   imports: [
@@ -37,6 +43,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     MaterialModuleModule,
     ReactiveFormsModule,
+    MatProgressBarModule,
+    MatDividerModule,
     AgmCoreModule.forRoot({
       apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
     })
@@ -45,9 +53,11 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     AdminLayoutComponent,
     LoginComponent,
+    LabTesterComponent,
+    SpinnerComponent
 
   ],
-  providers: [AuthGardService,AuthService],
+  providers: [AuthGardService,AuthService,CustomerService,TestService,ReportSubmitService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

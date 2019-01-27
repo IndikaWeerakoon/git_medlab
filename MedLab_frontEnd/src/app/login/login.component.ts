@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
     username : ['',Validators.required],
     password:['',Validators.required],
   })
+
   constructor(private fb:FormBuilder,private auth:AuthService, private router:Router) { }
 
   ngOnInit() {
@@ -28,8 +29,18 @@ export class LoginComponent implements OnInit {
     this.auth.loginUser(this.login.value).subscribe(data => this.status = data,
                                                       error=> this.error = error );
     localStorage.setItem('user',JSON.stringify(this.status));
+    if(this.status.user_type == 'RECEPTION'){
+        this.error = false;
+        this.router.navigate(['']);
+    }
+    else if(this.status.user_type == 'MLT'){
+      this.error = false;
+      this.router.navigate(['mlt']);
+    }else{
+      this.error = true;
+    }
 
-    this.router.navigate(['']);
+    
 
   }
 

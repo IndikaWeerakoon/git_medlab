@@ -1,0 +1,96 @@
+<!-- +====================================================================
+      Navigator Bar 
+     +====================================================================-->
+<nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-wrapper">
+            <a class="navbar-brand" href="#">{{getTitle()}}</a>
+        </div>
+                    
+        <ul class="navbar-nav">
+                           
+            <li class="nav-item ">
+                <a class="nav-link user-reg" href="#pablo">
+                    <mat-icon style="font-size: 20px;">person</mat-icon>
+                    <span class="user-name">{{userName|titlecase}}</span>
+                </a>
+            </li>
+
+            <li  class="nav-item ">
+                <button mat-stroked-button class="btn btn-danger" (click)='signOut()'>Sign Out</button>
+            </li>
+        </ul>
+               
+    </div>
+</nav>
+<!-- +====================================================================
+      Test data inseton form 
+     +====================================================================-->     
+<div class="main-body">
+        <div *ngIf='error' class="alert" role="alert">
+                <strong>Info: </strong> Speciman not found ! 
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+    <div class="card">
+        <div class = "card-header">
+            <h3 class="card-title text-title"> Add Testing Result</h3>
+        </div>
+        
+        <div class="card-body">
+            <form [formGroup] = 'speciman'>
+                <div class="row">
+                
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6">
+                        <mat-form-field class="example-full-width" appearance="outline" >
+                            <mat-label>Enter Specimen Id</mat-label>
+                            <input matInput placeholder="Enter Specimen Id" type="text" (keyup.enter)="searchFromSpecimen()" formControlName='specimanId'>
+                            <mat-icon matSuffix>search</mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+           </form>
+           <mat-card *ngIf='testingReport'>
+                <mat-card-header>
+                        <mat-card-title style="color:#444">Test Profile Type: <span style="color: rgba(69, 126, 192, 0.849);font-weight: normal;"> {{testingReport.testProfile.profileName}} </span></mat-card-title>
+                        <mat-card-subtitle>Test Report Submition form</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                        <div class="card-header card-header-info"><span class="test-title">Test Details</span></div>
+                    
+                    <div class="row">
+                        
+                        <div class="col-md-2"> </div>
+                        <div class="col-md-10">
+                            <div class="card">
+                               <form [formGroup]= "testDataForm" (ngSubmit)="onSubmit()">
+                                   <input type='hidden' [(ngModel)]='testingReport.reportId' formControlName='reportId'/><!--hidden property for store test report ids-->
+                                   <input type='hidden' [(ngModel)]='testingReport.testProfile.profileId' formControlName='profileId'/><!--hidden property for store test report ids-->
+                                   
+                                   <div class ="row" formArrayName="testResultList" *ngFor = "let test of testingReport.testList; let i = index; trackBy:trackByTestId">
+                                        <div class="col-md-2 text-secondary" style="font-size: 15px">{{test.name}} :</div>
+                                        
+                                        <div class="col-md-6" [formGroupName]="i">
+                                                <input type ="hidden" [(ngModel)]="test.testId" formControlName = 'testId'>
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput placeholder="" type="text" formControlName = 'testValue'>
+                                                </mat-form-field>               
+                                        </div>
+                                        <div class="col-md-3"> {{test.unit}} </div>
+                                   </div>
+                                   
+                                   <button mat-raised-button type="submit" class="btn btn-danger "  style="margin-right: 100px">Submit</button>
+
+                               </form>
+                                                           </div>
+                        </div>
+                    </div>
+                
+                </mat-card-content>
+                
+           </mat-card>
+        </div>
+    </div>
+</div>

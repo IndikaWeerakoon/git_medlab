@@ -27,17 +27,17 @@ export class AuthService {
     return this.http.post<ValidateUser>(this.url,userInfo,httpOptions)
               .catch(this.errorHandler);
 
-}
+  }
 
-private errorHandler(error:HttpErrorResponse){
-    return Observable.throw(error.message);
-}
+  private errorHandler(error:HttpErrorResponse){
+      return Observable.throw(error.message);
+  }
 
   public isAuthenticated():boolean{
-
-    this.user = localStorage.getItem('user');
-    if(!this.user){
-
+let id = localStorage.getItem('user')
+    console.log(id);
+    if(!id){
+      console.log("not work");
       return false;
     }else {
       this.user = JSON.parse(localStorage.getItem('user'));
@@ -48,4 +48,9 @@ private errorHandler(error:HttpErrorResponse){
     }
     
   }
+  public getUserName(){
+    let user = JSON.parse(localStorage.getItem('user'));
+    return user.username;
+  }
+
 }

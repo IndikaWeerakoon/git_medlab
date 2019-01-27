@@ -30,7 +30,8 @@ import {
   MatNativeDateModule,
   MatRadioModule,
   MatExpansionModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatListModule,
 
 } from '@angular/material';
 // import{MatHorizontalStepper} from '@angular/animation';
@@ -54,7 +55,8 @@ import {
     MatNativeDateModule,
     MatRadioModule,
     MatExpansionModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatListModule
   ],
   declarations: [
     DashboardComponent,

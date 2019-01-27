@@ -1,6 +1,7 @@
 package com.fullbright.medlab.controllers;
 
 
+import java.awt.List;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import javax.ws.rs.Consumes;
@@ -25,9 +26,6 @@ public class TestProfileController {
 	
 	@Autowired
 	TestProfileRepository testProfileRepository;
-	
-	@Autowired
-	TestController testController;
 	
 	@GET
 	@Path("/")
@@ -66,5 +64,8 @@ public class TestProfileController {
 		
 		return Response.status(Response.Status.OK).entity(testProfileTestList).build();
 	}
+	
+	
+
 
 }

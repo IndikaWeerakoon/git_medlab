@@ -1,0 +1,32 @@
+{
+    "POST_REG_CUSTOMER":{
+        "selectedTestprof":[
+                {"profileId":2,"profileName":"Full Blood Count"}
+            ],
+        "customerDetails":
+                {   "customerId":2,
+                    "tpNo":"0712011976",
+                    "name":"Indika Weerakoon",
+                    "email":"wmhindika@gmail.com",
+                    "dateOfBirth":"1995-08-12",
+                    "location":2,
+                    "gender":"male"},
+        "SpecimenId":{"urine":"ddfdfdfdf","blood":"fdfdfdffd"},
+        "recieptId":"11111",
+        "totalTest":1000
+    },
+
+    "Final Post |TEST FILLING DEATILS":{
+        "reportId":1,
+        "profileId":2,
+        "testResultList":[
+            {"testId":1,"testValue":"123"},
+            {"testId":2,"testValue":"123"},
+            {"testId":3,"testValue":"111"},
+            {"testId":4,"testValue":"222"},
+            {"testId":5,"testValue":"111"},
+            {"testId":6,"testValue":"222"},
+            {"testId":7,"testValue":"111"}
+        ]
+    }
+}

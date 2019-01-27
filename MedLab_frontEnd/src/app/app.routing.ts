@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthGardService } from './service/auth.gard.service';
 import { CanActivate } from '@angular/router/src/utils/preactivation';
 import { AuthService } from './service/auth-servise.service';
+import { LabTesterComponent } from './lab-tester/lab-tester.component';
 
 const routes: Routes =[
   {
@@ -22,11 +23,22 @@ const routes: Routes =[
     path: '',
     component: AdminLayoutComponent,
     canActivate:[AuthGardService],
+    data: { 
+      expectedRole: 'RECEPTION'
+    } ,
     children: [
         {
       path: '',
       loadChildren: './layouts/admin-layout/admin-layout.module#AdminLayoutModule'
     }]
+  },
+  {
+    path: 'mlt',
+    component: LabTesterComponent,
+    canActivate:[AuthGardService],
+    data: { 
+      expectedRole: 'MLT'
+    } 
   }
     // { path: 'dashboard',      component: DashboardComponent },
     // { path: 'user-profile',   component: UserProfileComponent },
