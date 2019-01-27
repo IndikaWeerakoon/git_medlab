@@ -34,7 +34,7 @@ export class AuthService {
   }
 
   public isAuthenticated():boolean{
-    let id = localStorage.getItem('user')
+let id = localStorage.getItem('user')
     console.log(id);
     if(!id){
       console.log("not work");
