@@ -1,0 +1,14 @@
+.user-name{
+    font-size: 15px;
+    /* margin-left:2px; */
+    color:#575656;
+    font-weight: normal;
+    
+}
+.mat-icon{
+    color:#575656;
+}
+.mat-stroked-button{
+    margin-left:5px;
+    margin-right: 10px;
+}

@@ -5,21 +5,29 @@ import { RouterModule } from '@angular/router';
 import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { MatButtonModule, MatIconModule, MatCardModule } from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule
   ],
   declarations: [
     FooterComponent,
     NavbarComponent,
-    SidebarComponent
+    SidebarComponent,
+    
   ],
   exports: [
     FooterComponent,
     NavbarComponent,
-    SidebarComponent
+    SidebarComponent,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule
   ]
 })
 export class ComponentsModule { }

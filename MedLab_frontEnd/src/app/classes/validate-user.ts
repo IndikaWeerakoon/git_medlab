@@ -1,4 +1,5 @@
 export interface ValidateUser {
-    status:boolean; 
-    type:string; 
+    status :boolean ;
+    username:string;
+    user_type: string;
 }

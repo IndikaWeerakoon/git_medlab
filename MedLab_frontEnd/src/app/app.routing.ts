@@ -6,6 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGardService } from './service/auth.gard.service';
+import { CanActivate } from '@angular/router/src/utils/preactivation';
+import { AuthService } from './service/auth-servise.service';
 
 const routes: Routes =[
   {
@@ -13,7 +15,9 @@ const routes: Routes =[
     redirectTo: 'dashboard',
     pathMatch: 'full',
   },
-  { path: 'login', component:LoginComponent},
+  { path: 'login',
+    component:LoginComponent,  
+  },
   {
     path: '',
     component: AdminLayoutComponent,
